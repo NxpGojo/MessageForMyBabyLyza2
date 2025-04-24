@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My kiss</title>
+    <link rel="icon" href="heart.png">
+    <style>
+        body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(ks.jpeg);
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #ff0000;
+    color: white;
+    border-radius: 5px;
+}
+
+button:hover {
+    color: #8b0000;
+}
+
+button {
+    top: 50%;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    position: absolute;
+    top: 1%;
+    left: 20%;
+    right: 20%;
+}
+
+img {
+    position: absolute;
+    bottom: 5%;
+    left: 25%;
+    right: 50%;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My kiss for youu<br>|<br>|<br>|<br>v</h1>
+        <button id="musicButton">▶Play This</button>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="k2.m4a" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    
+    <div>
+    <a href="quiz.html" target="_self">
+        <button>Next This</button>
+    </a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const music = document.getElementById("backgroundMusic");
+    const musicButton = document.getElementById("musicButton");
+
+    musicButton.addEventListener("click", function() {
+        if (music.paused) {
+            music.play();
+            musicButton.textContent = "Pause";
+        } else {
+            music.pause();
+            musicButton.textContent = "▶Play This";
+        }
+    });
+});
+    </script>
+</body>
+</html>

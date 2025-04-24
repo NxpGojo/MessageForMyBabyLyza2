@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz of Love</title>
+    <link rel="icon" href="heart.png">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-image: url(qq.jpeg);
+    margin: 0;
+    padding: 0;
+}
+
+.quiz-container {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ques-container {
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #333;
+}
+
+h1 {
+    color: #333;
+    font-size: 35px;
+}
+
+.btn-container {
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #8b0000;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 23px;
+    font-weight: bold;
+    color: #333;
+}  
+.next {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #ff0000;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-size: 24px;
+  padding: 15px 30px;
+  margin: 20px auto;
+  cursor: pointer;
+  transition: all 0.5s;
+  width: 60%;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.next span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.next span:after {
+  content: '\00bb'; /* » */
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.next:hover span {
+  padding-right: 25px;
+}
+
+.next:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.next a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz of Love❤️</h1>
+        <div id="question-container" class="ques-container"></div>
+        <div id="answer-buttons" class="btn-container">
+            <!-- Answer buttons will be dynamically added here -->
+        </div>
+        <button id="next-button" class="btn" onclick="nextQuestion()" style="display: none;">Next</button>
+        <div id="result"></div>
+    </div>
+    <div id="next-page" class="next" style="display: none;">
+        <!-- <div class="next"> -->
+            <a href="flower.html" target="_self">
+                <span>Next This</span>
+            </a>
+        </div>
+    </div>
+    <script>
+        const questions = [
+    {
+        question: "What percentage do I love you?",
+        answers: [
+            { text: "Ultra plus 1,000,000%", correct: true },
+            { text: "100%", correct: false },
+            { text: "101% may pasobra dahil special ka", correct: false },
+            { text: "99%", correct: false },
+        ],
+    },
+    {
+        question: "Where is my heart?",
+        answers: [
+            { text: "In my brain", correct: false },
+            { text: "In youu", correct: true },
+            { text: "On my body", correct: false },
+            { text: "Inside my heart", correct: false },
+        ],
+    },
+    {
+        question: "Anong tawag sa nararamdaman ko pag nagkakatinginan tayo?",
+        answers: [
+            { text: "Electric bill—kasi may spark", correct: true },
+            { text: "Delivery—kasi dumating na feelings ko", correct: false },
+            { text: "Exam—kasi kinabahan ako bigla", correct: false },
+            { text: "Magic—kasi ikaw yung trick ng tadhana", correct: false },
+        ],
+    },
+    {
+        question: "Kung feelings kita, anong weather ako?",
+        answers: [
+            { text: "Mainit – kasi ikaw lang ang gusto kong kasama", correct: false },
+            { text: "Malamig – pero para sa’yo, may init ng pagmamahal", correct: false },
+            { text: "Maulan – kasi ikaw ang reason ng ulan ng kilig", correct: false },
+            { text: "Bagyo – bigla na lang dumating, walang pasabi", correct: true },
+        ],
+    },
+    {
+        question: "Anong parte ng araw ko ang gusto kong kasama mo ako?",
+        answers: [
+            { text: "Umaga – para ikaw agad ang simula", correct: false },
+            { text: "Tanghali – kasi mainit na, lalo na 'pag ikaw ang katabi", correct: false },
+            { text: "Gabi – para maka kiss ng unli tas ano hehe", correct: true },
+            { text: "Lahat – kasi wala namang oras ang gusto kita", correct: true },
+        ],
+    },
+];
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function loadQuestion() {
+    const question = questions[currentQuestionIndex];
+    const questionContainer = document.getElementById("question-container");
+    const answerButtons = document.getElementById("answer-buttons");
+    const nextButton = document.getElementById("next-button");
+    const result = document.getElementById("result");
+
+    questionContainer.textContent = question.question;
+    answerButtons.innerHTML = '';
+
+    question.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.classList.add("btn");
+        button.textContent = answer.text;
+        button.onclick = () => handleAnswer(answer);
+        answerButtons.appendChild(button);
+    });
+
+    nextButton.style.display = 'none';
+    result.textContent = '';
+}
+
+function handleAnswer(answer) {
+    const nextButton = document.getElementById("next-button");
+    const result = document.getElementById("result");
+
+    if (answer.correct) {
+        score++;
+        result.textContent = "Correct!";
+    } else {
+        result.textContent = "Wrong!";
+    }
+
+    nextButton.style.display = 'inline-block';
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+    } else {
+        showFinalScore();
+    }
+}
+
+function showFinalScore() {
+    const questionContainer = document.getElementById("question-container");
+    const answerButtons = document.getElementById("answer-buttons");
+    const result = document.getElementById("result");
+    const nextButton = document.getElementById("next-button");
+    const nextPage = document.getElementById("next-page");
+
+    questionContainer.textContent = "Quiz Over!";
+    answerButtons.innerHTML = '';
+    result.textContent = `Your score is ${score} out of ${questions.length}`;
+    nextButton.style.display = 'none';
+    nextPage.style.display = 'block';
+    
+}
+
+// Start quiz on page load
+loadQuestion();
+
+    </script>
+</body>
+</html>

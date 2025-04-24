@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type</title>
+    <link rel="icon" href="heart.png">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff0000 0%, #8B0000 100%);
+            margin: 0;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .input-container {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .username-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .username-input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        .username-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .typing-indicator {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% { 
+                transform: scale(0);
+            } 40% { 
+                transform: scale(1);
+            }
+        }
+
+        .submit-btn {
+            background: white;
+            color: #ff0000;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .welcome-message {
+            font-size: 50px;
+            animation: fadeIn 1s ease;
+        }
+        .next {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #ff0000;
+            border: none;
+            color: #ff8f8f;
+            text-align: center;
+            font-size: 28px;
+            padding: 20px;
+            top: 25%;
+            width: 150px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .next span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .next span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .next:hover span {
+            padding-right: 25px;
+        }
+
+        .next:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        /* Adding the link styles to button */
+        .next a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="input-section">
+            <h1>Opsss Enter Your Name Muna po<br>Your Name is The Key</h1>
+            <div class="input-container">
+                <input type="text" id="username-input" class="username-input" placeholder="Type your username..." autocomplete="off">
+                <div class="typing-indicator hidden" id="typing-indicator">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+            <button class="submit-btn" id="submit-btn">Continue</button>
+        </div>
+        <div id="welcome-section" class="hidden">
+            <h1 class="welcome-message" id="welcome-message"></h1>
+            <div class="next">
+                <a href="kissme.html" target="_self">
+                    <span>Next This</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameInput = document.getElementById('username-input');
+            const typingIndicator = document.getElementById('typing-indicator');
+            const submitBtn = document.getElementById('submit-btn');
+            const inputSection = document.getElementById('input-section');
+            const welcomeSection = document.getElementById('welcome-section');
+            const welcomeMessage = document.getElementById('welcome-message');
+
+            let typingTimer;
+            const doneTypingInterval = 1000; // 1 second delay after typing stops
+
+            // Show typing indicator when user starts typing
+            usernameInput.addEventListener('input', function() {
+                clearTimeout(typingTimer);
+                typingIndicator.classList.remove('hidden');
+                
+                // Hide indicator if input is empty
+                if (this.value.length === 0) {
+                    typingIndicator.classList.add('hidden');
+                }
+                
+                // Set timer to hide indicator when typing stops
+                typingTimer = setTimeout(function() {
+                    typingIndicator.classList.add('hidden');
+                }, doneTypingInterval);
+            });
+
+            // Submit functionality
+            submitBtn.addEventListener('click', function() {
+                const username = usernameInput.value.trim();
+                
+                if (username.length > 0) {
+                    // Show welcome message
+                    inputSection.classList.add('hidden');
+                    welcomeMessage.textContent = `Welcome to my World, ${username} My Lolove, I love youu so muchhh po`;
+                    welcomeSection.classList.remove('hidden');
+                    
+                    // Optional: Save username to localStorage
+                    localStorage.setItem('username', username);
+                } else {
+                    // Show error if empty
+                    usernameInput.placeholder = "Please enter a username!";
+                    usernameInput.style.backgroundColor = "rgba(255, 200, 200, 0.3)";
+                    setTimeout(function() {
+                        usernameInput.placeholder = "Type your username...";
+                        usernameInput.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+                    }, 2000);
+                }
+            });
+
+            // Allow submission by pressing Enter key
+            usernameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    submitBtn.click();
+                }
+            });
+
+           
+        });
+    </script>
+</body>
+</html>

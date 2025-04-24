@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Game</title>
+    <link rel="icon" href="heart.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(bg.webp);
+            background-size: cover;
+    background-position: center;
+    height: 100vh;
+
+        }
+
+        .score {
+            font-size: 2em;
+            margin: 20px;
+            
+        }
+
+        h3 {
+            font-size: 2rem;
+    font-weight: 500;
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    right: 10%;
+    
+        }
+
+        p {
+            font-size: 2.5rem;
+    font-weight: 600;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    right: 25%;
+        }
+
+        .button {
+  position: relative;
+  background-color: #ff0000;
+  border: none;
+  font-size: 28px;
+  color: #ff8f8f;
+  padding: 20px;
+  width: 200px;
+  top: 28%;
+  right: 25%;
+  left: 25%;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.button:after {
+  content: "";
+  background: #ff8f8f;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.button:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+    </style>
+</head>
+<body>
+    <h1>Click Game To See My Code For Youu My Lolove</h1>
+    <p class="score">Score: <span id="score">0</span></p>
+    <button class="button" id="clickButton">Click me💗</button>
+    <h3>may pa games na me para may thrill po hehe</h3>
+    <a href="nextPage.html" target="_self"></a>
+
+    <script>
+        let score = 0;
+        const scoreDisplay = document.getElementById('score');
+        const clickButton = document.getElementById('clickButton');
+
+        // Update score when button is clicked
+        clickButton.addEventListener('click', () => {
+            score++;
+            scoreDisplay.textContent = score;
+
+            // If the score reaches 10, redirect to another page
+            if (score === 20) {
+                window.location.href = 'nextPage.html'; // Redirect to another page
+            }
+        });
+    </script>
+</body>
+</html>

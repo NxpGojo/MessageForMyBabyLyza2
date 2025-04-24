@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message for my Lolove</title>
+    <link rel="stylesheet" href="msg.css">
+    <link rel="icon" href="heart.png">
+</head>
+<body>
+    <div class="container">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="letter">
+                    <div class="text">
+                        <strong>Dear My Lolove</strong>
+                        <p>
+                            First of all Happy Monthsary po, I want to say is I love you so much I'm so grateful na we stay together and nakailang months na tayo we wil continue lng po this until will married na sheeshhh my future wife basta unahin po lagi si Lord ahh, I am with you always lng po lolove ko hinding hindi magsasawang mahalin ka because you're my forever and ever my lolove ko mwaaa mwaaaa😘😘
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="heart"></div>
+        </div>
+    </div>
+    <div id="container" class="hidden">
+        <h1 class="container" id="container"></h1>
+        <div class="next">
+            <a href="kiss.html" target="_self">
+                <span>Next This</span>
+            </a>
+        </div>
+    </div>
+    <div class="audio-container">
+        <audio id="myAudio" src="valentine.mp3" autoplay loop></audio>
+      </div>
+    <script>
+        const envelope = document.querySelector('.envelope-wrapper');
+        envelope.addEventListener('click', () => {
+            envelope.classList.toggle('flap');
+        });
+         // Some browsers block autoplay with sound, so this helps ensure it plays on user interaction
+    document.addEventListener('DOMContentLoaded', function () {
+      const audio = document.getElementById('myAudio');
+      
+      // Try to play immediately
+      const playPromise = audio.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Autoplay started
+            console.log("Music is playing.");
+          })
+          .catch(error => {
+            // Autoplay was prevented.
+            console.log("Autoplay was blocked. Waiting for user interaction...");
+
+            const unlockAudio = () => {
+              audio.play();
+              document.removeEventListener('click', unlockAudio);
+            };
+
+            document.addEventListener('click', unlockAudio);
+          });
+      }
+    });
+    </script>
+</body>
+</html>
